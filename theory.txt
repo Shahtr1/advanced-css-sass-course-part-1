@@ -1,0 +1,189 @@
+THREE PILLARS
+
+1. Responsive design
+2. Maintainable and scalable code
+3. Web performance
+
+=========================================================================================
+
+What happens to CSS when we load up a webpage?
+
+    Load HTML -> Parse HTML ---> Document Object Model(DOM)(like a family tree) --|
+                    |                                                             |
+                    |               Parse CSS                                     |
+                    |        |                     |                              |
+                    |        | Resolve conflicting |                              |
+                Load CSS---->| CSS declarations    |----> CSS Object Model--------|
+                             |      (cascade)      |         (CSSOM)              |
+                             |                     |                              |
+                             |                     |                              |
+                             | Process final CSS   |                              |  
+                             |      values         |                              |  
+                             |    (to pixels)      |                              |  
+                             |                     |                              |
+                                                                                  |
+                                                                                  |
+                                                                                  |
+          Website rendering the visual formatting model <-- Render tree <---------|
+                            |
+                            |
+                            |
+                Final rendered website
+
+=========================================================================================
+
+The CASCADE (The "C" in CSS)
+    Process of combining different stylesheets and resolving conflicts between different CSS rules and declarations, when more than one rule applies to a certain element.
+
+    IMPORTANCE > SPECIFICITY > SOURCE ORDER 
+
+    
+    IMPORTANCE
+    1. User !important declarations (in the browser)
+    2. Author !important declarations
+    3. Author declarations
+    4. User declarations
+    5. Default browser decalarations
+
+
+    SPECIFICITY
+    If there's no important keyword?
+    1. Inline styles 
+    2. IDs
+    3. Clases, pseudo-classes, attributes
+    4. Elements, pseuo-elements
+    
+    e.g.,
+
+                                                    Inline      IDs     Classes     Elements     Result
+
+        .button {                           |
+            font-size: 20px;                |
+            color: white;                   |          0         0         1            0         Lost     
+            background-color: blue;         |
+        }                                   |
+
+
+        nav#nav div.pull-right .button {    |
+            background-color: green;        |          0         1         2            2         Won  
+        }                                   |
+
+
+        a{                                  |
+            background-color: purple;       |          0         0         0            1         Lost
+        }                                   |
+
+
+        #nav a.button:hover {               |
+            background-color: yellow;       |          0         1         2            1         Lost
+        }                                   |   
+        
+
+    SOURCE ORDER
+    If there's same specificity?
+    The last declaration in the code will override all other declarations and will be applied.
+
+    The universal selector * has no specificity value(0, 0, 0, 0);
+============================================================================================================
+
+How CSS values are processed?
+
+<div class="section">
+    <p class="amazing">CSS is absolutely amazing</p>
+</div>
+
+.section {
+    font-size: 1.5rem;
+    width: 280px;
+    background-color: orangered;
+}
+
+p {
+    width: 140px;
+    background-color: green;
+}
+
+.amazing {
+    width: 66%;
+}
+
+                               width           padding         font-size       font-size       font-size
+                            (paragraph)      (paragraph)         (root)        (section)       (paragraph)
+
+Declared value                  66%               -                -             1.5rem             -
+(author declarations)                
+
+
+Cascaded value                  66%               -               16px           1.5rem             -
+(after the cascade)                                         (Browser default)
+
+
+Specified value
+(defaulting, if there's no      66%               0px             16px           1.5rem            24px
+specified value)                            (Initial value)                                     (Inheritance)
+
+
+Computed value
+(converting relative values     66%               0px              16px           24px             24px
+to absolute)                                                                  (1.5 * 16px)  
+
+
+Used value                  66% of 280px          0px              16px           24px             24px
+(final calculations            184.8px     
+based on layout)                
+
+
+Actual value
+(browser and device             185px             0px              16px           24px             24px
+restrictions)
+
+=====================================================================================================================
+
+How units are converted from relative to absolute (px)?
+
+Computed and used values
+
+html, body {
+    font-size: 16px;
+    width: 80vw;
+}
+
+header {
+    font-size: 150%;
+    padding: 2em;
+    margin-bottom: 10rem;
+    height: 90vh;
+    width: 1000px;
+}
+
+.header-child {
+    font-size: 3em;
+    padding: 10%;
+}
+
+
+                     Example                How to convert              Result in  
+                       (x)                     to pixels                  pixels   
+
+% (fonts)             150%                   x% * parent's                 24px 
+                                          computed font-size      
+
+% (lengths)           10%                   x% * parent's                  100px 
+                                            computed width 
+
+em (font)             3em                     x * parent                   72px (3 * 24)
+                                           computed font-size
+
+em (lengths)          2em                  x * current emlement            48px 
+                                            computed font-size
+
+rem                   10rem                      x * root                  160px
+                                            computed font-size
+
+vh                    90vh                     x * 1% of                   90% of the current 
+                                            viewport height                 viewport height 
+
+vw                    90vw                     x * 1% of                   90% of the current 
+viewport width                 viewport width 
+
+==========================================================================================================
