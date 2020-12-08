@@ -184,6 +184,166 @@ vh                    90vh                     x * 1% of                   90% o
                                             viewport height                 viewport height 
 
 vw                    90vw                     x * 1% of                   90% of the current 
-viewport width                 viewport width 
+                                            viewport width                 viewport width 
 
 ==========================================================================================================
+
+The Visual Formatting Model
+
+Algorithm that calculates boxes and determines the layout of these boxes,
+for each element in the render tree, in order to determine the final layout of the page.
+
+1. Dimensions of boxes: the box model;
+2. Box type: inline, block and inline-block;
+3. Positioning scheme: floats and positioning;
+4. Stacking contexts;
+5. Other elements in the render tree;
+6. Viewport size, dimensions of images, etc.
+
+THE BOX MODEL:
+    CONTENT: text, images, etc;
+    PADDING: transoarent area around the content, inside of the box;
+    BORDER: goes around the padding and the content;
+    MARGIN: space between boxes;
+    FILL AREA: area that gets finned with background color or background image.(includes padding and border)
+
+    A. HEIGHTS and WIDTHS
+        total width = right border + right padding + specified width + left padding + left border
+        total height = top border + top padding + specified width + bottom padding + bottom border
+
+    B. INLINE, BLOCK-LEVEL and ININE-BLOCK
+        
+                Block-level
+                    boxes  
+
+        1. Elements formatted visually as
+            blocks  
+            
+        2. 100% of parent's width
+        3. Vertically, one after another
+        4. Box-model applies as showed
+
+        E.g., display: block
+            display: flex
+            display: list-item
+            display: table
+
+
+-----------------------------------------------------------------------
+
+
+                Inline boxes
+
+        1. Content is distributed in lines
+        2. Occupies only content's space
+        3. No line-breaks
+        4. No heights and widths
+        5. Paddings and margins only horizontal(left and right)
+        
+        E.g., display: inline
+
+
+------------------------------------------------------------------------
+
+
+            Inline-block
+                boxes
+                
+        1. A mix of block and inline 
+        2. Occupies only content's space
+        3. No line-breaks
+        4. Box-model applies as showed
+        
+        E.g., display: inline-block
+
+
+------------------------------------------------------------------------
+
+
+    C. NORMAL FLOW, ABSOLUTE POSITIONING and FLOATS 
+    
+                Normal
+        1. Default positioning scheme.
+        2. NOT floated
+        3. NOT absolutely positioned
+        4. Elements laid out according to 
+            their source order.
+
+            E.g., Default
+                position: relative
+
+
+--------------------------------------------------------------------------
+
+
+
+                Floats
+        1. Element is removed from the 
+            normal flow 
+        2. Text and inline elements will
+            wrap around the floated element.
+        The container will not adjust its height to the element.
+
+            E.g., float:left 
+                float: right
+
+
+----------------------------------------------------------------------------
+
+
+                Absolute 
+               Positioning
+
+        1. Element is removed from the normal flow
+        2. No impact on surrounding content or elements
+        3. We use top, bottom, left and right to offset the element
+            from its relatively positioned container.
+
+            E.g., position: absolute
+                position: fixed
+
+
+=======================================================================================
+
+BLOCK ELEMENT MODIFIER (BEM)
+BLOCK: standalone component taht is meaningful on its own
+ELEMENT: part of a block that has no standalone meaning 
+MODIFIER: a different version of a block or an element
+
+E.g.,
+    .block {}
+    .block__element {}
+    .block__element--modifier {}
+
+--------------------------------------------------------------------------------------
+
+Architecting with files and folders
+    The 7-1 pattern
+        7 different folders for partial Sass files, and 
+        1 main Sass file to import all other files into
+        a compiled CSS stylesheet.
+
+    The 7 folders are 
+        base/   (where we put the basic definitions)
+        components/   (where we have 1 file for each component)
+        layout/   (where we define layout of the project)
+        pages/   (styles for specific pages of the project)
+        themes/   (for different themes)
+        abstracts/   (where we put code that doesnt output any css like variables and mixins)
+        vendors/   (where all third party css goes)
+
+---------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
