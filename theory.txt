@@ -334,6 +334,27 @@ Architecting with files and folders
 
 ---------------------------------------------------------------------------------------
 
+BASIC RESPONSIVE DESIGN PRINCIPLES
+1. Fluid Grids and Layouts
+    To allow content to easily adapt to the current viewport width used to browse the website.
+    Uses % rather than px for all layout-related lengths.
+
+2. Flexible/Responsible Images
+    
+3. Media Queries
+
+---------------------------------------------------------------------------------------
+
+LAYOUT TYPES
+
+1. FLOAT LAYOUTS 
+2. FLEXBOX
+3. CSS GRID
+
+----------------------------------------------------------------------------------------
+
+
+
 
 
 
